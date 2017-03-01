@@ -1,4 +1,4 @@
-package com.emailvalidator_ui.emailvalidator_ui;
+package com.ignacio.emailvalidator_ui;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -11,6 +11,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.ignacio.validator.emailvalidator.*; //logic from part 1 and 2
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -26,23 +27,30 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
         
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
+        final TextField email = new TextField();
+        email.setCaption("Type an email address here:");
 
-        Button button = new Button("Click Me");
+        Button button = new Button("Submit");
         button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
+        	layout.removeAllComponents();
+            layout.addComponents(email, button);
+        	int rules = 0;
+        	rules = Validate.validate(email.getValue());
+        	if(rules == 4){
+        		layout.addComponent(new Label(email.getValue() + " is a valid email address!"));
+        	}
+        	else
+        		layout.addComponent(new Label("Invalid email address entered. Only followed  " + rules + " rules."));
         });
         
-        layout.addComponents(name, button);
+        layout.addComponents(email, button);
         layout.setMargin(true);
         layout.setSpacing(true);
         
         setContent(layout);
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @WebServlet(urlPatterns = "/*", name = "EmailValidator", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
     }
