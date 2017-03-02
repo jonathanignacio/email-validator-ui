@@ -7,11 +7,6 @@
 	<artifactId>emailvalidator-ui</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-
-	<groupId>com.ignacio.emailvalidator-ui</groupId>
-	<artifactId>emailvalidator-ui</artifactId>
-	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>emailvalidator-ui</name>
 
 	<prerequisites>
